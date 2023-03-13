@@ -1,2 +1,4 @@
-# programing-pattern
-유한대학교 2023 2학년 1학기 프로그래밍 패턴 
+# 유한대학교 VR게임앱학과  Programming pattern
+* 202227069
+* 조훈성
+
