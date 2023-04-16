@@ -1,0 +1,4 @@
+﻿  ConsoleApplication2.cpp
+C:\Users\user\Desktop\ConsoleApplication2\ConsoleApplication2.cpp(28,16): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\user\Desktop\ConsoleApplication2\ConsoleApplication2.cpp(28,18): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+  ConsoleApplication2.vcxproj -> C:\Users\user\Desktop\ConsoleApplication2\x64\Debug\ConsoleApplication2.exe
