@@ -1,0 +1,3 @@
+﻿  ConsoleApplication1.cpp
+D:\202227069\programing-pattern\lecture07\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(80,2): warning C4326: 'main'의 반환 형식이 'int'이어야 하는데 'void'입니다.
+  ConsoleApplication1.vcxproj -> D:\202227069\programing-pattern\lecture07\ConsoleApplication1\x64\Debug\ConsoleApplication1.exe
