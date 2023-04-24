@@ -1,0 +1,3 @@
+﻿  ConsoleApplication2.cpp
+D:\202227069\programing-pattern\lecture08\ConsoleApplication2\ConsoleApplication2\MGameLoop.hpp(28,8): warning C4551: 함수 호출에 인수 목록이 없습니다.
+  ConsoleApplication2.vcxproj -> D:\202227069\programing-pattern\lecture08\ConsoleApplication2\x64\Debug\ConsoleApplication2.exe
