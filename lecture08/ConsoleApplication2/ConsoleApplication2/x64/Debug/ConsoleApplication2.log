@@ -1,1 +1,4 @@
-﻿  ConsoleApplication2.vcxproj -> D:\202227069\programing-pattern\lecture08\ConsoleApplication2\x64\Debug\ConsoleApplication2.exe
+﻿  ConsoleApplication2.cpp
+D:\202227069\programing-pattern\lecture08\ConsoleApplication2\ConsoleApplication2\MGameLoop.hpp(23,17): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+D:\202227069\programing-pattern\lecture08\ConsoleApplication2\ConsoleApplication2\MGameLoop.hpp(23,19): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+  ConsoleApplication2.vcxproj -> D:\202227069\programing-pattern\lecture08\ConsoleApplication2\x64\Debug\ConsoleApplication2.exe

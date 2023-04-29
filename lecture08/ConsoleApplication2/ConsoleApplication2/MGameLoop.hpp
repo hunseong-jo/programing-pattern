@@ -1,4 +1,4 @@
-#pragma once 
+Ôªø#pragma once
 #include <iostream>
 #include <conio.h>
 #include <Windows.h>
@@ -19,9 +19,9 @@
 namespace MuSoeun
 {
 	void gotoxy(int x, int y) {
-		//x, y ¡¬«• º≥¡§
+		//x, y Ï¢åÌëú ÏÑ§Ï†ï
 		COORD pos = { x,y };
-		//ƒøº≠ ¿Ãµø
+		//Ïª§ÏÑú Ïù¥Îèô
 		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 	}
 
@@ -33,7 +33,6 @@ namespace MuSoeun
 		SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &consoleCursorInfo);
 	}
 
-
 	class MGameLoop
 	{
 	public:
@@ -41,26 +40,25 @@ namespace MuSoeun
 		~MGameLoop() {}
 
 		bool isGameRunning = false;
-		bool isEscRunning = false; // esc
-		bool isEscRingging2 = true;
+		bool isPause = false;
 
 		void Initialize()
 		{
 			SetCursorState(false);
 
 			gotoxy(3, 15);
-			std::cout << ANSI_COLOR_RESET"∞‘¿” √ ±‚»≠¡ﬂ" << std::endl;
+			std::cout << ANSI_COLOR_RESET"Í≤åÏûÑ Ï¥àÍ∏∞ÌôîÏ§ë" << std::endl;
 			isGameRunning = true;
 		}
 		void Release()
 		{
 			gotoxy(3, 18);
-			std::cout << ANSI_COLOR_RESET"∞‘¿” ¡æ∑·¡ﬂ" << std::endl;
+			std::cout << ANSI_COLOR_RESET"Í≤åÏûÑ Ï¢ÖÎ£åÏ§ë" << std::endl;
 		}
 		void Update()
 		{
 			gotoxy(3, 16);
-			std::cout << ANSI_COLOR_RESET"∞‘¿” ≈∞¿‘∑¬ ¥Î±‚" << std::endl;
+			std::cout << ANSI_COLOR_RESET"Í≤åÏûÑ ÌÇ§ÏûÖÎ†• ÎåÄÍ∏∞" << std::endl;
 			if (_kbhit())
 			{
 				KeyEvent(_getch());
@@ -69,114 +67,127 @@ namespace MuSoeun
 		void Render()
 		{
 			gotoxy(3, 17);
-			std::cout << ANSI_COLOR_RESET"∞‘¿” »≠∏È ±◊∏Æ±‚" << std::endl;
+			std::cout << ANSI_COLOR_RESET"Í≤åÏûÑ ÌôîÎ©¥ Í∑∏Î¶¨Í∏∞" << std::endl;
+		}
+		void RenderRest()
+		{
+			gotoxy(3, 20);
+			std::cout << "                                " << std::endl;
+			gotoxy(3, 22);
+			std::cout << "                                " << std::endl;
+			gotoxy(7, 22);
+			std::cout << "                                " << std::endl;
 		}
 
+		void isGameover() {
+			bool isSelectedL = false;
+			bool isSelectedR = false;
+			gotoxy(3, 20);
+			std::cout << "Ï¢ÖÎ£å ÌïòÏãúÍ≤†ÏäµÎãàÍπå?  " << std::endl;
+			gotoxy(3, 22);
+			std::cout << "[  Ïòà  ]  " << std::endl;
+			gotoxy(15, 22);
+			std::cout << "[ÏïÑÎãàÏò§]  " << std::endl;
+			//isGameRunning = false;
 
+			while (isPause) {
+				if (_kbhit())
+				{
+					char kinput = _getch();
+					switch (kinput)
+					{
+					case KEY_LEFT:
+
+						if (isSelectedR) {
+							gotoxy(15, 22);
+							std::cout << ANSI_COLOR_RESET"[ÏïÑÎãàÏò§]  " << std::endl;
+						}
+						if (isSelectedL == false) {
+							gotoxy(3, 22);
+							std::cout << ANSI_COLOR_YELLOW"[  Ïòà  ]  " << std::endl;
+
+						}
+						isSelectedL = true;
+						isSelectedR = false;
+						break;
+					case KEY_RIGHT:
+						if (isSelectedL) {
+							gotoxy(3, 22);
+							std::cout << ANSI_COLOR_RESET"[  Ïòà  ]  " << std::endl;
+						}
+						if (isSelectedR == false) {
+							gotoxy(15, 22);
+							std::cout << ANSI_COLOR_YELLOW"[ÏïÑÎãàÏò§]  " << std::endl;
+						}
+						isSelectedR = true;
+						isSelectedL = false;
+						break;
+					case KEY_ENTER:
+						if (isSelectedL) {
+							RenderRest();
+							isPause = false;
+							isGameRunning = false;
+						}
+						if (isSelectedR) {
+							RenderRest();
+							isPause = false;
+							isGameRunning = true;
+						}
+						break;
+					default:
+						//isGameRunning = true;
+						break;
+					}
+				}
+			}
+		}
 
 		void Run()
 		{
 			Initialize();
 			while (isGameRunning)
 			{
-				Update();
-				Render();
+				if (isPause == false) {
+					Update();
+					Render();
+				}
 			}
 			Release();
 		}
 
-		/*void InputEsc(char KeyInput)
+		void KeyEvent(char KeyInput)
 		{
-			gotoxy(3, 20);
-			std::cout << "∞‘¿”¿ª ¡æ∑·«œΩ√∞⁄Ω¿¥œ±Ó?" << std::endl;
-			std::cout <<               "" << std::endl;
-			std::cout <<               "   ≥◊(Y),    æ∆¥œø‰(N)  " << std::endl;
-
-
-			char KeyInput2 = _getch();
-
-			switch (KeyInput2)
-				{
-			case KEY_LEFT:
-				{
-				gotoxy(-1, 19);
-				std::cout << ANSI_COLOR_RED"   ≥◊(Y)" << std::endl;
-
-				}
-			case KEY_RIGHT:
-				{
-				gotoxy(8, 23);
-				std::cout << ANSI_COLOR_RED  "     æ∆¥œø‰(N)  " << std::endl;
-				}
-			default:
+			switch (KeyInput)
 			{
+
+			case KEY_ESC:
+				isPause = true;
+				isGameover();
+				break;
+			case KEY_LEFT:
+				if (isPause == false) {
+					gotoxy(5, 5);
+					std::cout << ANSI_COLOR_RED"ÏôºÏ™Ω ÎàåÎ¶º  " << std::endl;
+				}
+				break;
+			case KEY_RIGHT:
+				if (isPause == false) {
+					gotoxy(5, 5);
+					std::cout << ANSI_COLOR_GREEN"Ïò§Î•∏Ï™Ω ÎàåÎ¶º" << std::endl;
+				}
+				break;
+			case KEY_ENTER:
+				if (isPause == false) {
+					gotoxy(5, 5);
+					std::cout << ANSI_COLOR_BLUE"ÏóîÌÑ∞ ÎàåÎ¶º  " << std::endl;
+				}
+				break;
+			default:
 				isGameRunning = true;
 				break;
 			}
-				}
 
-		}*/
-
-		void KeyEvent(char KeyInput)
-		{
-			static char currentSelection = 'a'; // currentSelection ∫Øºˆ∏¶ √ﬂ∞°«œ∞Ì 'a'∑Œ √ ±‚»≠«’¥œ¥Ÿ.
-
-			if (isEscRingging2)
-			{
-				switch (KeyInput)
-				{
-				case KEY_ESC:
-					/*isGameRunning = false;*/
-					isEscRunning = true;
-					isEscRingging2 = false;
-					break;
-				case KEY_LEFT:
-					gotoxy(5, 5);
-					std::cout << ANSI_COLOR_RED"øﬁ¬  ¥≠∏≤  " << std::endl;
-					break;
-				case KEY_RIGHT:
-					gotoxy(5, 5);
-					std::cout << ANSI_COLOR_GREEN"ø¿∏•¬  ¥≠∏≤" << std::endl;
-					break;
-				case KEY_ENTER:
-					gotoxy(5, 5);
-					std::cout << ANSI_COLOR_BLUE"ø£≈Õ ¥≠∏≤  " << std::endl;
-					break;
-
-				default:
-					break;
-				}
-			}
-			if (isEscRunning)
-			{
-				if (KeyInput == KEY_ESC) {
-					gotoxy(3, 20);
-					std::cout << "∞‘¿”¿ª ¡æ∑·«œΩ√∞⁄Ω¿¥œ±Ó?" << std::endl;
-					std::cout << "" << std::endl;
-					std::cout << "   " << (currentSelection == 'a' ? ANSI_COLOR_YELLOW : "") << "≥◊(Y)" << ANSI_COLOR_RESET << ",    " << (currentSelection == 'd' ? ANSI_COLOR_YELLOW : "") << "æ∆¥œø‰(N)" << ANSI_COLOR_RESET << "  " << std::endl;
-				}
-				else if (KeyInput == KEY_LEFT || KeyInput == KEY_RIGHT) {
-					currentSelection = KeyInput;
-					gotoxy(3, 20);
-					std::cout << "∞‘¿”¿ª ¡æ∑·«œΩ√∞⁄Ω¿¥œ±Ó?" << std::endl;
-					std::cout << "" << std::endl;
-					std::cout << "   " << (currentSelection == 'a' ? ANSI_COLOR_YELLOW : "") << "≥◊(Y)" << ANSI_COLOR_RESET << ",    " << (currentSelection == 'd' ? ANSI_COLOR_YELLOW : "") << "æ∆¥œø‰(N)" << ANSI_COLOR_RESET << "  " << std::endl;
-
-					char KeyInput2 = _getch();
-
-					if (currentSelection == 'a' && KeyInput2 == KEY_ENTER)
-					{
-						isGameRunning = false;
-					}
-
-					if (currentSelection == 'd' && KeyInput2 == KEY_ENTER)
-					{
-						
-					}
-				}
-			}
-
-		};
-
+		}
 	};
+
 }
